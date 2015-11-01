@@ -1,0 +1,24 @@
+redis:
+  image: redis
+
+postgres:
+  image: postgres
+
+sentry-web:
+  build: .
+  ports:
+    - "8080:9000"
+  links:
+    - redis
+    - postgres
+
+sentry-celery-beat:
+  build: .
+  links:
+    - redis
+
+sentry-celery-worker:
+  build: .
+  links:
+    - redis
+    - postgres
